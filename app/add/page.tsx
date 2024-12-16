@@ -26,7 +26,7 @@ export default function AddPage() {
     // }
 
     // ternary operator
-    getNPM == "" || getNAMA == "" || getProdi == ""
+    (getNPM == "" || getNAMA == "" || getProdi == "")
       ? alert("Lengkapi Seluruh Data !")
       : [(Object.values(getValue).length == 0)
         ? alert("Simpan")
