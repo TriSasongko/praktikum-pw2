@@ -1,11 +1,21 @@
 "use client";
 import React, { useState, useTransition } from "react";
+import { checkData } from "../models/mahasiswa";
 
 export default function AddPage() {
   // hook (useState)
   const [getNPM, setNPM] = useState("");
   const [getNAMA, setNAMA] = useState("");
   const [getProdi, setProdi] = useState("");
+
+  // buat hook (useState)
+  // untuk respon hasil fungsi "checkData"
+  const [getValue, setValue] = useState({});
+
+  // buat fungsi untuk respon fungsi "checkData"
+  const checkNPM = async (npm: string) => {
+    setValue(await checkData(npm));
+  };
 
   //fungsi simpan data
   const setSaveData = () => {
@@ -16,9 +26,12 @@ export default function AddPage() {
     // }
 
     // ternary operator
-    (getNPM == "" || getNAMA == "" || getProdi == "")
-    ? alert ("Lengkapi Seluruh Data !")
-    : alert("Ok");
+    getNPM == "" || getNAMA == "" || getProdi == ""
+      ? alert("Lengkapi Seluruh Data !")
+      : [(Object.values(getValue).length == 0)
+        ? alert("Simpan")
+        : alert("Gagal Simpan !")
+      ]
   };
 
   return (
@@ -33,6 +46,7 @@ export default function AddPage() {
             className="input input-bordered input-success w-full"
             onChange={(e) => {
               setNPM(e.target.value);
+              checkNPM(e.target.value);
             }}
           />
         </div>

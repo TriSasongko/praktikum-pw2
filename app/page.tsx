@@ -1,18 +1,18 @@
 "use client";
 
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
-import { getData, setUpdateStatus } from './models/mahasiswa';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { getData, setUpdateStatus } from "./models/mahasiswa";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
 // buat fungsi untuk dialog hapus
 async function setDelete(npm: string, nama: string) {
   // alert("Hapus Data");
   if (confirm(`Data Mahasiswa : ${npm} - ${nama} Ingin Dihapus ?`) == true) {
     alert(`Data Mahasiswa : ${npm} - ${nama} Berhasil Dihapus`);
-    await setUpdateStatus(npm)
+    await setUpdateStatus(npm);
     // reload otomatis
     location.reload();
   }
@@ -36,7 +36,7 @@ export default function RootPage() {
   useEffect(() => {
     // panggil fungsi "fetchData"
     fetchData();
-  }, [])
+  }, []);
 
   // const mahasiswa = await prisma.tb_mahasiswa.findUnique({
   //   where: {
@@ -46,7 +46,6 @@ export default function RootPage() {
 
   return (
     <>
-
       <title>view data mahasiswa</title>
 
       <nav className="text-center mb-5 flex justify-end">
@@ -55,7 +54,6 @@ export default function RootPage() {
           Tambah Data Mahasiswa
         </Link>
       </nav>
-
 
       {/* Tampilan data mahasiswa */}
       <table className="w-full">
@@ -78,20 +76,35 @@ export default function RootPage() {
             <tr key={index}>
               <td className="border border-black p-2.5 text-center">
                 {/* icon edit */}
-                <Link href={`/edit/${btoa(data.npm)}`} className='bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-lg mr-1 text-sm'
-                  title='Ubah Data'>
+                <Link
+                  href={`/edit/${btoa(data.npm)}`}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded-lg mr-1 text-sm"
+                  title="Ubah Data"
+                >
                   <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>
                 </Link>
 
                 {/* icon hapus */}
-                <Link href={"/"} className='bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-lg ml-1 text-sm'
-                  title='Hapus Data' onClick={() => { setDelete(data.npm, data.nama) }}>
+                <Link
+                  href={"/"}
+                  className="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-lg ml-1 text-sm"
+                  title="Hapus Data"
+                  onClick={() => {
+                    setDelete(data.npm, data.nama);
+                  }}
+                >
                   <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                 </Link>
               </td>
-              <td className="border border-black px-2.5 text-center">{data.npm}</td>
-              <td className="border border-black px-2.5 text-justify">{data.nama}</td>
-              <td className="border border-black px-2.5 text-center">{data.prodi}</td>
+              <td className="border border-black px-2.5 text-center">
+                {data.npm}
+              </td>
+              <td className="border border-black px-2.5 text-justify">
+                {data.nama}
+              </td>
+              <td className="border border-black px-2.5 text-center">
+                {data.prodi}
+              </td>
             </tr>
           ))}
         </tbody>
