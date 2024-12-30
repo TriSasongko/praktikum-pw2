@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import { checkData } from "../models/mahasiswa";
+import { checkData, saveData } from "../models/mahasiswa";
+import Link from "next/link";
 
 export default function AddPage() {
   // hook (useState)
@@ -18,21 +19,36 @@ export default function AddPage() {
   };
 
   //fungsi simpan data
-  const setSaveData = () => {
+  const setSaveData = async () => {
     // if (getNPM == "" || getNAMA == "" || getProdi == "") {
     //   alert("Lengkapi Seluruh Data !");
     // } else {
     //   alert("Ok");
     // }
 
-    // ternary operator
-    (getNPM == "" || getNAMA == "" || getProdi == "")
+    // ternary operator if, else
+    getNPM == "" || getNAMA == "" || getProdi == ""
       ? alert("Lengkapi Seluruh Data !")
-      : [(Object.values(getValue).length == 0)
-        ? alert("Simpan")
-        : alert("Gagal Simpan !")
-      ]
+      : Object.values(getValue).length == 0
+      ? [
+          await saveData(getNPM, getNAMA, getProdi),
+          alert("Berhasil Simpan"),
+          location.reload(),
+        ]
+      : alert("NPM sudah ada");
+    // jika tenary operator pernyataan nya lebih dari satu pakai array
+    // : [alert("ok"), alert ("yes")]
   };
+
+  //tenary operator if, else if, else if
+  // (getNPM == "" || getNAMA == "" || getPRODI == "")
+  // ? alert("Lengkapi seluruh data")
+  // : (xxx)
+  // ? alert ("")
+  // : (yyy)
+  // ? alert ("")
+  // : "-"
+  // };
 
   return (
     <>
@@ -86,7 +102,9 @@ export default function AddPage() {
           >
             Simpan
           </button>
-          <button className="btn btn-outline ml-5X 2-28">Batal</button>
+          <Link href={"/"} className="btn btn-outline ml-5X 2-28">
+            Batal
+          </Link>
         </div>
       </div>
     </>

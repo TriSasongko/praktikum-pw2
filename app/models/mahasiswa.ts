@@ -46,3 +46,15 @@ export const checkData = async (npm: string) => {
 
   return check;
 };
+
+export const saveData = async(npm:string, nama:string, prodi:string) => {
+  await prisma.tb_mahasiswa.create({
+    data: {
+      //pastikan semua field masuk kecuali field yang auto increment
+      npm: npm,
+      nama: nama,
+      prodi: prodi,
+      status: 'Y',
+    },
+  })
+}
